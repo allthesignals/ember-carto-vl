@@ -6,6 +6,18 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+
+    'carto-vl': {
+      auth: {
+        username: 'planninglabs',
+        apiKey: 'default_public',
+      },
+    },
+
+    'mapbox-gl': {
+      accessToken: 'pk.eyJ1Ijoid2lsYnVybmZvcmNlIiwiYSI6ImNpaHAzNzZuZzAxZ2N0NG00dnJvNWhpbG0ifQ.wenPCGfbuhofj2g4kkTJGw',
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

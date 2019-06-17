@@ -1,0 +1,8 @@
+{{#if this._cartoLayer}}
+  {{yield (hash
+    interactivity=(hash
+      on=(component "carto-interactivity" layer=this._cartoLayer)
+    )
+    instance=this._cartoLayer
+  )}}
+{{/if}}

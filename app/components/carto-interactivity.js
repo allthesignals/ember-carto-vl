@@ -1,0 +1,1 @@
+export { default } from 'ember-carto-vl/components/carto-interactivity';

@@ -1,9 +1,10 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2017,
     sourceType: 'module'
   },
+  parser: 'babel-eslint',
   plugins: [
     'ember'
   ],
