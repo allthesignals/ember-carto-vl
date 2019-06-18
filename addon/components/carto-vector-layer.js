@@ -21,7 +21,7 @@ export default class CartoVectorLayer extends Component {
 
   didLoadLayer = () => {};
 
-  _cartoLayer = null;
+  _loadedLayer = null;
 
   get layerId() {
     return guidFor(this);
@@ -38,7 +38,7 @@ export default class CartoVectorLayer extends Component {
   }
 
   async _updateLayer() {
-    await waitForPromise(this._cartoLayer.update(this.source, this.viz));
+    await waitForPromise(this._loadedLayer.update(this.source, this.viz));
   }
 
   _onLoad(layer) {
@@ -48,7 +48,7 @@ export default class CartoVectorLayer extends Component {
       return;
     }
 
-    this.set('_cartoLayer', layer);
+    this.set('_loadedLayer', layer);
     this.didLoadLayer(layer);
     waiter.endAsync(this.willLoad);
   }
@@ -56,9 +56,9 @@ export default class CartoVectorLayer extends Component {
   didUpdateAttrs() {
     super.didUpdateAttrs();
 
-    if (this._cartoLayer) {
+    if (this._loadedLayer) {
       const methodName = this.visible ? 'show' : 'hide';
-      this._cartoLayer[methodName]();
+      this._loadedLayer[methodName]();
 
       this._updateLayer();
     }
@@ -67,6 +67,6 @@ export default class CartoVectorLayer extends Component {
   willDestroyElement(...params) {
     super.willDestroyElement(...params);
 
-    this._cartoLayer.remove();
+    this._loadedLayer.remove();
   }
 }

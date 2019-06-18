@@ -1,8 +1,8 @@
-{{#if this._cartoLayer}}
+{{#if this._loadedLayer}}
   {{yield (hash
     interactivity=(hash
-      on=(component "carto-interactivity" layer=this._cartoLayer)
+      on=(component "carto-interactivity" layer=this._loadedLayer)
     )
-    instance=this._cartoLayer
+    instance=this._loadedLayer
   )}}
 {{/if}}
