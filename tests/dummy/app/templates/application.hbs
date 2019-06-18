@@ -4,7 +4,7 @@
   id="map"
   @initOptions={{hash
     style="mapbox://styles/mapbox/basic-v9"
-    zoom=13
+    zoom=17
     center=(array -73.938 40.6635)
   }}
   as |map|
@@ -22,8 +22,13 @@
     as |layer|
   >
     <layer.interactivity.on
-      @event="featureHover"
-      @action={{action "testAction"}}
+      @event="featureEnter"
+      @action={{action this.featureEnter}}
+    />
+
+    <layer.interactivity.on
+      @event="featureLeave"
+      @action={{action this.featureLeave}}
     />
   </CartoVectorLayer>
 </MapboxGl>

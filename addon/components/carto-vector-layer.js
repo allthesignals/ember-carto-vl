@@ -31,14 +31,11 @@ export default class CartoVectorLayer extends Component {
     super.init(...args);
 
     this.willLoad = waiter.beginAsync();
+
     const layer = instantiateLayer(this.layerId, this.source, this.viz);
+    layer.on('loaded', bind(this, this._onLoad, layer));
 
     layer.addTo(this.map, this.before);
-    layer.on('loaded', bind(this, this._onLoad, layer));
-  }
-
-  async _updateLayer() {
-    await waitForPromise(this._loadedLayer.update(this.source, this.viz));
   }
 
   _onLoad(layer) {
@@ -53,6 +50,10 @@ export default class CartoVectorLayer extends Component {
     waiter.endAsync(this.willLoad);
   }
 
+  async _updateLayer() {
+    await waitForPromise(this._loadedLayer.update(this.source, this.viz));
+  }
+
   didUpdateAttrs() {
     super.didUpdateAttrs();
 
@@ -64,9 +65,9 @@ export default class CartoVectorLayer extends Component {
     }
   }
 
-  willDestroyElement(...params) {
+  willDestroy(...params) {
     super.willDestroyElement(...params);
 
-    this._loadedLayer.remove();
+    if (this._loadedLayer) this._loadedLayer.remove();
   }
 }

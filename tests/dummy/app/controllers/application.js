@@ -5,9 +5,16 @@ export default class ApplicationController extends Controller {
   isVisible = true;
 
   @action
-  testAction({ features: [feature] }) {
-    if (feature) {
+  featureEnter({ features }) {
+    features.forEach(feature => {
       feature.color.blendTo('opacity(LimeGreen, 0.5)', 100);
-    }
+    });
+  }
+
+  @action
+  featureLeave({ features }) {
+    features.forEach(feature => {
+      feature.color.reset(100);
+    });
   }
 }
