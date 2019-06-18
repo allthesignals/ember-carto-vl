@@ -1,8 +1,9 @@
 import Component from '@ember/component';
-import cartoVl from '../utils/carto-vl';
 import { guidFor } from '@ember/object/internals';
-import layout from '../templates/components/carto-vector-layer';
+import { bind } from '@ember/runloop';
 import { buildWaiter, waitForPromise } from 'ember-test-waiters';
+import cartoVl from '../utils/carto-vl';
+import layout from '../templates/components/carto-vector-layer';
 
 const { instantiateLayer } = cartoVl;
 const waiter = buildWaiter('load-waiter');
@@ -29,20 +30,27 @@ export default class CartoVectorLayer extends Component {
   init(...args) {
     super.init(...args);
 
-    const willInstantiate = waiter.beginAsync();
+    this.willLoad = waiter.beginAsync();
     const layer = instantiateLayer(this.layerId, this.source, this.viz);
 
     layer.addTo(this.map, this.before);
-    layer.on('loaded', () => {
-      this.set('_cartoLayer', layer);
-      this.didLoadLayer(layer);
-
-      waiter.endAsync(willInstantiate);
-    });
+    layer.on('loaded', bind(this, this._onLoad, layer));
   }
 
   async _updateLayer() {
     await waitForPromise(this._cartoLayer.update(this.source, this.viz));
+  }
+
+  _onLoad(layer) {
+    if (this.isDestroyed || this.isDestroying) {
+      layer.remove();
+
+      return;
+    }
+
+    this.set('_cartoLayer', layer);
+    this.didLoadLayer(layer);
+    waiter.endAsync(this.willLoad);
   }
 
   didUpdateAttrs() {
