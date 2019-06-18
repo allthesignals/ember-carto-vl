@@ -12,9 +12,18 @@
   <CartoVectorLayer
     @map={{map.instance}}
     @visible={{this.isVisible}}
-    @source={{carto-source-sql "select * from mappluto"}}
+    @source={{carto-source-geojson
+      (hash
+        type='Feature'
+        geometry=(hash
+          type='Point'
+          coordinates=(array -73.938 40.6635)
+        )
+        properties=(hash)
+      )
+    }}
     @viz={{carto-viz "
-      width: 5
+      width: 13
       color: #6A5ACD
       strokeWidth: 0.5
       strokeColor: #191970

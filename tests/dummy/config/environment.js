@@ -7,12 +7,13 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
 
-    'carto-vl': {
-      auth: {
-        username: 'planninglabs',
-        apiKey: 'default_public',
-      },
-    },
+    // required if using Carto as a backend
+    // 'carto-vl': {
+    //   auth: {
+    //     username: 'planninglabs',
+    //     apiKey: 'default_public',
+    //   },
+    // },
 
     'mapbox-gl': {
       accessToken: 'pk.eyJ1Ijoid2lsYnVybmZvcmNlIiwiYSI6ImNpaHAzNzZuZzAxZ2N0NG00dnJvNWhpbG0ifQ.wenPCGfbuhofj2g4kkTJGw',
